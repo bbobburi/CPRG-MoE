@@ -143,7 +143,7 @@ Each dialogue contains an ordered list of utterances. Wrap this utterance list i
 
 | Field | Description |
 |---|---|
-| Dialogue ID | A unique identifier for the dialogue. |
+| `Dialogue ID` | A unique identifier for the dialogue. |
 | `turn` | Utterance number within the dialogue, starting at 1 in the example. |
 | `speaker` | Speaker identifier. The current implementation assumes two speakers: `A` and `B`. |
 | `utterance` | Utterance text. |
@@ -169,7 +169,7 @@ Emotion and cause annotations are required for training and evaluation.
 
 `DATASET_TYPE` determines the emotion-label mapping and the number of emotion classes.
 
-| `DATASET_TYPE` | Emotion labels |
+| DATASET_TYPE | Emotion labels |
 |---|---|
 | `ConvECPE` | `happy`, `sad`, `neutral`, `angry`, `excited`, `frustrated` |
 | `RECCON` | `anger`, `disgust`, `fear`, `happiness`, `sadness`, `surprise`, `neutral` |
