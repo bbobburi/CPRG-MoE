@@ -191,7 +191,7 @@ ConvECPE treats `excited` and `frustrated` as separate emotion classes. See the 
 A new dataset can be used if it follows the supported input structure and emotion-label scheme. Changing the value of `DATASET_TYPE` alone does not add support for different emotion categories.
 
 > 📩 **Using a new dataset**
-> If you provide a data sample or a description of its structure, along with the emotion-label list, we will prepare a converter to the CPRG-MoE input format. Where necessary, we will adapt the emotion-label mapping and model output classes and provide an updated image.
+> If you provide a data sample or a description of its structure, along with the emotion-label list, we will provide code to convert your data into the CPRG-MoE input format. Where necessary, we will adapt the emotion-label mapping and model output classes and provide an updated image.
 
 Your data is supplied from your execution server and is not included in the image.
 
