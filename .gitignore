@@ -1,17 +1,32 @@
 # Logs
-lightning_logs
+lightning_logs/
 logs/*
-former_logs
+former_logs/
 
 # Caches
 _*
 *.pyc
 **/__pycache__/
-backups
+backups/
+hf_cache/
+.DS_Store
 
 # Temporary files for experiment setting
 datasettings.py
 *.ipynb
 
-# model checkpoints
+# Model checkpoints
 model/*.ckpt
+checkpoints/
+
+# Local configuration
+.env
+.env.*
+!.env.example
+
+# Experiment outputs
+outputs/
+
+# Local Docker image archives
+*.tar
+*.tar.gz
