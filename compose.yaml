@@ -1,0 +1,73 @@
+services:
+  train:
+    image: ${CPRG_IMAGE:-ghcr.io/bbobburi/cprg-moe:1.0.0}
+    platform: linux/amd64
+    working_dir: /outputs
+    entrypoint: ["python", "/app/main.py"]
+    user: "${LOCAL_UID:?Set LOCAL_UID in .env}:${LOCAL_GID:?Set LOCAL_GID in .env}"
+    shm_size: 2gb
+    environment:
+      HOME: /outputs
+      HF_HOME: /outputs/hf_cache
+    volumes:
+      - type: bind
+        source: ${DATA_DIR:?Set DATA_DIR in .env}
+        target: /data
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${OUTPUT_DIR:?Set OUTPUT_DIR in .env}
+        target: /outputs
+        bind:
+          create_host_path: false
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ["${GPU_ID:-0}"]
+              capabilities: [gpu]
+    command:
+      - --gpus
+      - "0"
+      - --num_process
+      - "1"
+      - --num_worker
+      - "${NUM_WORKER:-0}"
+      - --train_data
+      - /data/${TRAIN_FILE:?Set TRAIN_FILE in .env}
+      - --valid_data
+      - /data/${VALID_FILE:?Set VALID_FILE in .env}
+      - --test_data
+      - /data/${TEST_FILE:?Set TEST_FILE in .env}
+      - --dataset_type
+      - ${DATASET_TYPE:-ConvECPE}
+      - --data_label
+      - ${DATA_LABEL:-ConvECPE_fold0}
+      - --training_iter
+      - "${EPOCHS:-20}"
+      - --batch_size
+      - "${BATCH_SIZE:-4}"
+      - --encoder_name
+      - bert-base-cased
+      - --dropout
+      - "0.5"
+      - --guiding_lambda
+      - "0.6"
+      - --accumulate_grad_batches
+      - "1"
+      - --window_size
+      - "3"
+      - --max_seq_len
+      - "128"
+      - --context_type
+      - xvd
+      - --learning_rate
+      - "5e-5"
+      - --log_directory
+      - /outputs/logs
+      - --model_save_path
+      - /outputs/model
+      - --ckpt_filename
+      - ${CKPT_NAME:-best_model}
